@@ -20,9 +20,10 @@ node('') {
 	}
 	
 	stage ('Deployment'){
-		ansiblePlaybook become: true, colorized: true, disableHostKeyChecking: true, playbook: 'deploy.yml'
+		//ansiblePlaybook become: true, colorized: true, disableHostKeyChecking: true, playbook: 'deploy.yml'
+		deploy adapters: [ tomcat9(credentialsId: 'TomcatCreds', path: '' , url: 'http://100.25.157.42:8080/')],contextpath: 'counterwebapp' , war: 'target/*.var'
 	}
-	
+	 	
 	stage ('Notification'){
 		emailext (
 		      subject: "Job Completed",
